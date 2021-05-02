@@ -19,8 +19,7 @@ namespace Weatherex.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddInfrastructure();
-
+            services.AddInfrastructure(Configuration);
             services.AddControllers();
             services.AddSwagger();
         }
