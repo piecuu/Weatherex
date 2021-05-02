@@ -17,5 +17,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Weatherex.Infrastructure\Weatherex.Infrastructure.csproj" />
+  </ItemGroup>
+
 
 </Project>
