@@ -12,12 +12,13 @@ namespace Weatherex.Infrastructure.Persistence
             var user = new ApplicationUser
             {
                 UserName = "rick",
-                Email = "rick@earth.com"
+                Email = "rick@earth.com",
+                EmailConfirmed = true
             };
 
             if (userManager.Users.All(x => x.UserName != user.UserName))
             {
-                await userManager.CreateAsync(user, "sanchez");
+                await userManager.CreateAsync(user, "!Sanchez1");
             }
         }
     }
