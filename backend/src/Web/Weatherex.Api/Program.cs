@@ -47,20 +47,6 @@ namespace Weatherex.Api
             }
 
             await host.RunAsync();
-
-            //try
-            //{
-            //    Log.Information("Weatherex starting...");
-            //    CreateHostBuilder(args).Build().Run();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Log.Fatal(ex, "Something gone wrong while starting application. Exiting...");
-            //}
-            //finally
-            //{
-            //    Log.CloseAndFlush();
-            //}
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
