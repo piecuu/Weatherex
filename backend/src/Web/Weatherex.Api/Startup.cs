@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Weatherex.Api.Extensions;
+using Weatherex.Infrastructure;
 
 namespace Weatherex.Api
 {
@@ -18,6 +19,7 @@ namespace Weatherex.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInfrastructure(Configuration);
             services.AddControllers();
             services.AddSwagger();
         }
@@ -34,6 +36,8 @@ namespace Weatherex.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
