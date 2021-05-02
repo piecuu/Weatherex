@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +9,7 @@ namespace Weatherex.Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -18,19 +19,24 @@ namespace Weatherex.Api
                 .ReadFrom.Configuration(config)
                 .CreateLogger();
 
-            try
-            {
-                Log.Information("Weatherex starting...");
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Something gone wrong while starting application. Exiting...");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
+            Log.Information("Weatherex starting...");
+
+            var host = CreateHostBuilder(args).Build();
+            await host.RunAsync();
+
+            //try
+            //{
+            //    Log.Information("Weatherex starting...");
+            //    CreateHostBuilder(args).Build().Run();
+            //}
+            //catch (Exception ex)
+            //{
+            //    Log.Fatal(ex, "Something gone wrong while starting application. Exiting...");
+            //}
+            //finally
+            //{
+            //    Log.CloseAndFlush();
+            //}
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
