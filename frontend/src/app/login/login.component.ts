@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth-service.service';
 import { TokenStorageService } from '../core/services/token-storage.service';
 
@@ -13,12 +14,17 @@ export class LoginComponent implements OnInit {
   isLogged = false;
   loginInvalid = false;
   errorResponse = '';
+  returnUrl: string;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
     private tokenStorageService: TokenStorageService
   ) {
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/game';
+
     this.form = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -26,6 +32,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.tokenStorageService.getToken()) {
+      this.router.navigate([this.returnUrl]);
+    }
   }
 
   onSubmit(): void {
