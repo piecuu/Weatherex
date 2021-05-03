@@ -20,7 +20,7 @@ namespace Weatherex.Infrastructure.Services
 
         public string CreateJwtToken(string userId)
         {
-            var claims = new List<Claim>
+            var tokenClaims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -36,6 +36,7 @@ namespace Weatherex.Infrastructure.Services
                 issuer: tokenIssuer,
                 audience: tokenAudience,
                 signingCredentials: tokenCreds,
+                claims: tokenClaims,
                 expires: tokenExpires
                 );
 

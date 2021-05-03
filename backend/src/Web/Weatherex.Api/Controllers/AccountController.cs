@@ -40,7 +40,7 @@ namespace Weatherex.Api.Controllers
 
             var token = _tokenService.CreateJwtToken(user.Id);
 
-            return new JsonResult(token);
+            return Ok(token);
         }
     }
 }
