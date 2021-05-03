@@ -14,7 +14,8 @@ namespace Weatherex.Infrastructure
         {
             services.AddDbContextExtension(configuration);
             services.AddIdentityExtension();
-            services.AddAuthExtensions(configuration);
+            services.AddServicesExtension();
+            services.AddAuthExtension(configuration);
 
             services.AddTransient<ITokenService, TokenService>();
 

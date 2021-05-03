@@ -9,7 +9,7 @@ namespace Weatherex.Infrastructure.Auth
 {
     public static class AuthExtensions
     {
-        public static IServiceCollection AddAuthExtensions(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAuthExtension(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(options =>
                 {
