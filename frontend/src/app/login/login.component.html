@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h2>Log In</h2>
+        <mat-error *ngIf="loginInvalid">
+            {{ errorResponse }}
+          </mat-error>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Username" formControlName="username" required>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput type="password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Login</button>
+      </form>
+    </mat-card-content>
+    <mat-card-footer>
+        <span>Use default user: <b>rick</b> / <b>!Sanchez1</b></span>
+    </mat-card-footer>
+</mat-card>
