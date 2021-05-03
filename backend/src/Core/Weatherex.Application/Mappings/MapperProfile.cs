@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Weatherex.Application.Dto;
 
 namespace Weatherex.Application.Mappings
 {

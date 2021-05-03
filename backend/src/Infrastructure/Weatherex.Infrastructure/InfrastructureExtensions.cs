@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Weatherex.Application.Interfaces;
 using Weatherex.Infrastructure.Auth;
 using Weatherex.Infrastructure.Identity;
 using Weatherex.Infrastructure.Persistence;
@@ -16,8 +15,6 @@ namespace Weatherex.Infrastructure
             services.AddIdentityExtension();
             services.AddServicesExtension();
             services.AddAuthExtension(configuration);
-
-            services.AddTransient<ITokenService, TokenService>();
 
             return services;
         }
