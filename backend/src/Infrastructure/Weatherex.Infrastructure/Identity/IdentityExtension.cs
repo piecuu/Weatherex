@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Weatherex.Infrastructure.Persistence;
 
 namespace Weatherex.Infrastructure.Identity
@@ -14,8 +13,8 @@ namespace Weatherex.Infrastructure.Identity
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            //services.AddAuthentication()
+            //    .AddIdentityServerJwt();
 
             return services;
         }
