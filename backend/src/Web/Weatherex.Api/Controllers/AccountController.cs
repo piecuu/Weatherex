@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Weatherex.Application.Dto;
+using Weatherex.Application.Account;
+using Weatherex.Application.Interfaces;
 using Weatherex.Infrastructure.Identity;
 
 namespace Weatherex.Api.Controllers
@@ -15,30 +13,34 @@ namespace Weatherex.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(UserManager<ApplicationUser> userManager, ITokenService tokenService)
         {
             _userManager = userManager;
+            _tokenService = tokenService;
         }   
 
         [HttpPost("auth")]
-        public async Task<IActionResult> AuthenticateAsync(AuthenticationDto authRequest)
+        public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest authRequest)
         {
             var user = _userManager.Users.SingleOrDefault(x => x.UserName == authRequest.UserName);
 
-            if (user is null)
+            if (user == null)
             {
                 return NotFound("User not found.");
             }
 
             var authResult = await _userManager.CheckPasswordAsync(user, authRequest.Password);
 
-            if (authResult)
+            if (!authResult)
             {
-                return Ok();
+                return BadRequest("Invalid username or password.");
             }
 
-            return BadRequest("Invalid username or password.")
+            var token = _tokenService.CreateJwtToken(user.Id);
+
+            return new JsonResult(token);
         }
     }
 }
