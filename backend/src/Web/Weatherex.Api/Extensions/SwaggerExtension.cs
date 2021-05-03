@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 
 namespace Weatherex.Api.Extensions
 {
@@ -16,6 +17,31 @@ namespace Weatherex.Api.Extensions
                     Title = "Weatherex API",
                     Description = "Weather application created for tech test"
                 });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                var security = new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            },
+                            UnresolvedReference = true
+                        },
+                        new List<string>()
+                    }
+                };
+                c.AddSecurityRequirement(security);
             });
         }
 

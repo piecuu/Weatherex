@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Weatherex.Application.Interfaces;
 
 namespace Weatherex.Api.Controllers
 {
@@ -13,14 +10,24 @@ namespace Weatherex.Api.Controllers
     [Authorize]
     public class WeatherController : ControllerBase
     {
-        public WeatherController()
+        private readonly IWeatherService _weatherService;
+
+        public WeatherController(IWeatherService weatherService)
         {
+            _weatherService = weatherService;
         }
 
-        [HttpGet]
+        [HttpGet("{city}")]
         public async Task<IActionResult> GetWeatherInTimeAsync(string city)
         {
+            var result = await _weatherService.GetWeatherInLocationAsync(city);
 
+            if (result == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(result);
         }
     }
 }
