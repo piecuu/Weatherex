@@ -1,6 +1,6 @@
 ﻿namespace Weatherex.Application.Account
 {
-    public class AuthenticationQuery
+    public class AuthenticationRequest
     {
         public string UserName { get; set; }
 
