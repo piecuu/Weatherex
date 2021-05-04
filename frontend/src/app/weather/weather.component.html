@@ -1,7 +1,11 @@
-<div fxLayout="column" fxLayoutAlign="start center" style="margin-top: 25px;">
+<div *ngIf="!weatherResponse" fxLayout fxLayoutAlign="center center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>  
+
+<div *ngIf="weatherResponse" fxLayout="column" fxLayoutAlign="start center" style="margin-top: 25px;">
     <h1>Weather forecast for <b>{{ weatherResponse.title }}</b></h1>
 </div>
-<div class="container" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly stretch" fxLayoutGap="15px">
+<div *ngIf="weatherResponse" class="container" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly stretch" fxLayoutGap="15px">
         <mat-card class="product" *ngFor="let weather of weatherResponse.consolidated_weather">
             <mat-card-title>{{ weather.applicable_date	}}</mat-card-title>
             <h3>{{ weather.weather_state_name }}</h3>

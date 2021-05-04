@@ -11,6 +11,7 @@ import { WeatherService } from '../core/services/weather.service';
 export class WeatherComponent implements OnInit {
   returnUrl = '';
   weatherResponse: any;
+  isLoading: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,21 +19,36 @@ export class WeatherComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private weatherService: WeatherService
   ) {
+    this.isLoading = true;
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/login';
-    this.initializeData();
+    this.checkToken();
   }
 
   ngOnInit(): void {
   }
 
+  checkToken(): void {
+    const isAuthenticated = this.tokenStorageService.isAuthenticated();
+
+    console.log(isAuthenticated);
+
+    if (!isAuthenticated) {
+      this.router.navigate([this.returnUrl]);
+    }
+    else {
+      this.initializeData();
+    }
+  }
+
   initializeData(): void {
     this.weatherService.getWeatherForecast('Belfast').subscribe(data => {
       this.weatherResponse = data;
-      console.log(this.weatherResponse);
     },
     err => {
       console.log(err.error);
     });
+
+    this.isLoading = false;
   }
 
 }
