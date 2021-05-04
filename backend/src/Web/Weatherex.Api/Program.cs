@@ -54,6 +54,7 @@ namespace Weatherex.Api
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls("http://*:7000");
                     webBuilder.UseStartup<Startup>();
                 });
     }

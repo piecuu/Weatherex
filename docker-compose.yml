@@ -1,0 +1,39 @@
+version: '3'
+networks:
+    weatherex-network:
+      driver: bridge
+
+services: 
+  backend:
+    container_name: weatherex-backend
+    build: 
+      context: ./backend/
+    ports: 
+      - '7000:7000'
+    depends_on: 
+      - 'database'
+    networks:
+      - weatherex-network
+
+  frontend:
+    container_name: weatherex-frontend
+    build:
+      context: ./frontend/
+    ports: 
+      - '80:80'
+    depends_on: 
+      - 'backend'
+    networks:
+      - weatherex-network
+
+  database:
+    container_name: weatherex-database
+    image: postgres:latest
+    ports: 
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=Weatherex
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+    networks:
+      - weatherex-network
