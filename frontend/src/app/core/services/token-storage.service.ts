@@ -42,6 +42,8 @@ export class TokenStorageService {
         return false;
       }
 
+      this.loggedIn.next(true);
+
       return true;
     }
     else {

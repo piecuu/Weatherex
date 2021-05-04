@@ -4,6 +4,7 @@
 
 <div *ngIf="weatherResponse" fxLayout="column" fxLayoutAlign="start center" style="margin-top: 25px;">
     <h1>Weather forecast for <b>{{ weatherResponse.title }}</b></h1>
+    <button mat-raised-button (click)="getWeatherData()">Refresh data</button>
 </div>
 <div *ngIf="weatherResponse" class="container" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly stretch" fxLayoutGap="15px">
         <mat-card class="product" *ngFor="let weather of weatherResponse.consolidated_weather">

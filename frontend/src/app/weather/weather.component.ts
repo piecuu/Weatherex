@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { TokenStorageService } from '../core/services/token-storage.service';
 import { WeatherService } from '../core/services/weather.service';
 
@@ -19,7 +20,6 @@ export class WeatherComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private weatherService: WeatherService
   ) {
-    this.isLoading = true;
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/login';
     this.checkToken();
   }
@@ -30,25 +30,22 @@ export class WeatherComponent implements OnInit {
   checkToken(): void {
     const isAuthenticated = this.tokenStorageService.isAuthenticated();
 
-    console.log(isAuthenticated);
-
     if (!isAuthenticated) {
       this.router.navigate([this.returnUrl]);
     }
     else {
-      this.initializeData();
+      this.getWeatherData();
     }
   }
 
-  initializeData(): void {
+  getWeatherData(): void {
+    this.weatherResponse = null;
+
     this.weatherService.getWeatherForecast('Belfast').subscribe(data => {
       this.weatherResponse = data;
     },
     err => {
-      console.log(err.error);
     });
 
-    this.isLoading = false;
   }
-
 }
