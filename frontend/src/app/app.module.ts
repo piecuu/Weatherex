@@ -24,12 +24,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoginComponent } from './login/login.component';
 import { WeatherComponent } from './weather/weather.component';
 import { AuthInterceptor } from './core/helpers/auth.interceptor';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    WeatherComponent
+    WeatherComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

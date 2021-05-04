@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject } from 'rxjs';
 
 const TOKEN_KEY = 'token';
 
@@ -7,12 +9,20 @@ const TOKEN_KEY = 'token';
   providedIn: 'root'
 })
 export class TokenStorageService {
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor() { }
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
+  }
+
+  constructor(
+    private router: Router
+  ) { }
 
   public saveToken(token: string): void {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.setItem(TOKEN_KEY, token);
+    this.loggedIn.next(true);
   }
 
   public getToken(): string | null {
@@ -28,6 +38,7 @@ export class TokenStorageService {
       const isExpired = helper.isTokenExpired(token);
 
       if (isExpired) {
+        this.loggedIn.next(false);
         return false;
       }
 
@@ -40,5 +51,7 @@ export class TokenStorageService {
 
   public logout(): void {
     localStorage.clear();
+    this.router.navigate(['/login']);
+    this.loggedIn.next(false);
   }
 }

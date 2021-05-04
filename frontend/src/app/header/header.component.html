@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <div></div>
+        <span class="fill-remaining-space">Weatherex</span>
+        <div *ngIf="isLoggedIn$ | async">
+            <button mat-raised-button (click)="onLogout()">Logout</button>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>
