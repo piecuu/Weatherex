@@ -1,0 +1,22 @@
+<div *ngIf="!weatherResponse" fxLayout fxLayoutAlign="center center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>  
+
+<div *ngIf="weatherResponse" fxLayout="column" fxLayoutAlign="start center" style="margin-top: 25px;">
+    <h1>Weather forecast for <b>{{ weatherResponse.title }}</b></h1>
+    <button mat-raised-button (click)="getWeatherData()">Refresh data</button>
+</div>
+<div *ngIf="weatherResponse" class="container" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly stretch" fxLayoutGap="15px">
+        <mat-card class="product" *ngFor="let weather of weatherResponse.consolidated_weather">
+            <mat-card-title>{{ weather.applicable_date	}}</mat-card-title>
+            <h3>{{ weather.weather_state_name }}</h3>
+            <img class="image" mat-card-image src="https://www.metaweather.com/static/img/weather/png/{{weather.weather_state_abbr}}.png">
+            <mat-card-content>
+                <p>Temperature: {{ weather.the_temp | number:'1.1-2'}}°C</p>
+                <p>Min Temperature: {{ weather.min_temp | number:'1.1-2'}}°C</p>
+                <p>Max Temperature: {{ weather.max_temp | number:'1.1-2'}}°C</p>
+            </mat-card-content>
+            <mat-card-footer>
+            </mat-card-footer>
+        </mat-card>
+</div>

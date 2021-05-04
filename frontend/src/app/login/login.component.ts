@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private tokenStorageService: TokenStorageService
   ) {
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/game';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
 
     this.form = this.fb.group({
       username: ['', Validators.required],
@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password).subscribe(data => {
       this.tokenStorageService.saveToken(data);
       this.isLogged = true;
+      this.router.navigate([this.returnUrl]);
     },
     err => {
       this.errorResponse = err.error;
