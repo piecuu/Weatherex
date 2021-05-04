@@ -19,6 +19,7 @@ namespace Weatherex.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddInfrastructure(Configuration);
             services.AddControllers()
                     .AddNewtonsoftJson();
@@ -31,6 +32,12 @@ namespace Weatherex.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder
+                 .AllowAnyOrigin()
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 );
 
             app.UseSwaggerAndUi();
 
